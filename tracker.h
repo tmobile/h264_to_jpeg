@@ -1,13 +1,24 @@
-#include<stdint.h>
-#include<stdlib.h>
-#include<zmq.h>
-#include<nanomsg/nn.h>
-#include<nanomsg/pipeline.h>
-#include<string.h>
-#include<sys/time.h>
-#include "time.h"
+#include <stdint.h>
+#include <stdlib.h>
+#include <zmq.h>
+#include <nanomsg/nn.h>
+#include <nanomsg/pipeline.h>
+#include <string.h>
+#include <sys/time.h>
+// #define _POSIX_C_SOURCE 200809L // to fix clock_gettime()
+// #define _POSIX_C_SOURCE 199309L // to fix clock_gettime()
+#include <time.h>
+// #include "time.h"
 #include "chunk.h"
 #include "ujsonin/ujsonin.h"
+
+#define CLOCK_MONOTONIC 0 // to fix errors like "use of undeclared identifier 'CLOCK_MONOTONIC'"
+
+uint64_t now_msec() {
+    struct timeval now;
+    gettimeofday(&now, NULL);
+    return now.tv_sec * 1000 + ( now.tv_usec / 1000 );
+}
 
 void chunk__dump( chunk *c );
 char chunk__isheader( chunk *c );

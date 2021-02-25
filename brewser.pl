@@ -65,9 +65,9 @@ else {
 
 sub get_pkg_versions {
   my %pkgs;
-  my @dirs = sort `find /usr/local/Cellar -name .brew -maxdepth 3 -type d`;
+  my @dirs = sort `find /opt/homebrew/Cellar -name .brew -maxdepth 3 -type d`;
   for my $dir ( @dirs ) {
-    $pkgs{ $1 } = $2 if( $dir =~ m|^/usr/local/Cellar/([^/]+)/([^/]+)/\.brew$| );
+    $pkgs{ $1 } = $2 if( $dir =~ m|^/opt/homebrew/Cellar/([^/]+)/([^/]+)/\.brew$| );
   }
   return \%pkgs;
 }
@@ -83,13 +83,13 @@ sub read_file {
 sub install_info {
   my ( $pkg, $ver ) = @_;
   if( !$ver ) {
-    my $path = `find /usr/local/Cellar/$pkg -maxdepth 1 2>/dev/null | tail -1`;
+    my $path = `find /opt/homebrew/Cellar/$pkg -maxdepth 1 2>/dev/null | tail -1`;
     chomp $path;
     return 0 if( !$path );
     my @parts = split( "/", $path );
     $ver = pop @parts;
   }
-  return decode_json( read_file( "/usr/local/Cellar/$pkg/$ver/INSTALL_RECEIPT.json" ) );
+  return decode_json( read_file( "/opt/homebrew/Cellar/$pkg/$ver/INSTALL_RECEIPT.json" ) );
 }
 
 sub ensure_head {

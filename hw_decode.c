@@ -6,15 +6,15 @@
 
 #include <stdio.h>
 
-#include <libavcodec/avcodec.h>
-#include <libavcodec/videotoolbox.h>
-#include <libavformat/avformat.h>
-#include <libavutil/pixdesc.h>
-#include <libavutil/hwcontext.h>
-#include <libavutil/opt.h>
-#include <libavutil/avassert.h>
-#include <libavutil/imgutils.h>
-#include <libswscale/swscale.h>
+#include <avcodec.h>
+#include <videotoolbox.h>
+#include <avformat.h>
+#include <pixdesc.h>
+#include <hwcontext.h>
+#include <opt.h>
+#include <avassert.h>
+#include <imgutils.h>
+#include <swscale.h>
 #include <turbojpeg.h>
 #include <VideoToolbox/VideoToolbox.h>
 #include <time.h>
@@ -22,6 +22,8 @@
 #include <unistd.h>
 #include <sys/time.h>
 #include "ujsonin/ujsonin.h"
+
+// #define CLOCK_MONOTONIC 0 // to fix errors like "use of undeclared identifier 'CLOCK_MONOTONIC'"
 
 int64_t timespecDiff(struct timespec *timeA_p, struct timespec *timeB_p) {
   return ((timeA_p->tv_sec * 1000000000) + timeA_p->tv_nsec) - ((timeB_p->tv_sec * 1000000000) + timeB_p->tv_nsec);
